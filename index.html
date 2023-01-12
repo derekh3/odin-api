@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img src="#" />
+    <div class="error"></div>
+    <button>New image</button>
+    <input type="text" />
+    <script>
+      const img = document.querySelector("img");
+      const button = document.querySelector("button");
+      const errorText = document.querySelector(".error");
+      const input = document.querySelector("input");
+      function fetchImage(searchTerm = "cats") {
+        fetch(
+          `https://api.giphy.com/v1/gifs/translate?api_key=p0rnUozGb8pyERwwNv1w804BkXpjf04r&s=${searchTerm}`,
+          { mode: "cors" }
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (response) {
+            img.src = response.data.images.original.url;
+          })
+          .catch(function (error) {
+            console.log(error);
+            errorText.textContent = error;
+          });
+      }
+      button.onclick = () => {
+        fetchImage(input.value);
+      };
+    </script>
+  </body>
+</html>
